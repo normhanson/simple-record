@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hansoncoyne.simple;
 
 import java.io.IOException;
@@ -17,13 +12,11 @@ import java.util.List;
  */
 public class SimpleFileReader {
 
-    InputStream in;
-    char delimiter;
-    private int newLine = 10;
-    private int carriageReturn = 13;
-    private int pipe = 124;
-    private int comma = 44;
-    private int space = 32;
+    private static int newLine = 10;
+    private static int carriageReturn = 13;
+    private static int pipe = 124;
+    private static int comma = 44;
+    private static int space = 32;
 
     public SimpleFileReader() {
     }
@@ -87,7 +80,7 @@ public class SimpleFileReader {
 
                 } else if (itemIndex == 4) {
                     System.out.println("setDOB:" + sb);
-                    person.setDob(null);
+                    person.setDob(sb.toString());
                     sb = new StringBuilder();
                     
                     //reset the item index
