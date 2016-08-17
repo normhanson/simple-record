@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author nhanson
  */
-public class SimpleFileReader {
+public class SimpleInputStreamReader {
 
     private static int newLine = 10;
     private static int carriageReturn = 13;
@@ -18,7 +18,7 @@ public class SimpleFileReader {
     private static int comma = 44;
     private static int space = 32;
 
-    public SimpleFileReader() {
+    public SimpleInputStreamReader() {
     }
 
     /**

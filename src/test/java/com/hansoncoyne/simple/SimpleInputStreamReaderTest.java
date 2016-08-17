@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  *
  * @author nhanson
  */
-public class SimpleFileReaderTest {
+public class SimpleInputStreamReaderTest {
     
     
     String samplePipe = "simple.pipe";
@@ -29,7 +29,7 @@ public class SimpleFileReaderTest {
     InputStream skipRows = this.getClass().getClassLoader().getResourceAsStream(skipRowsPipe);
     InputStream missingColumns = this.getClass().getClassLoader().getResourceAsStream(missingColumnsTxt);
     
-    public SimpleFileReaderTest() {
+    public SimpleInputStreamReaderTest() {
         
     }
     
@@ -40,8 +40,8 @@ public class SimpleFileReaderTest {
     public void testPipe() {
         
         try {
-            SimpleFileReader sfr = new SimpleFileReader();            
-            List<Person> persons = sfr.readRecords(pipeIn);
+            SimpleInputStreamReader sisr = new SimpleInputStreamReader();            
+            List<Person> persons = sisr.readRecords(pipeIn);
             assertEquals(4, persons.size());
             
             assertEquals(persons.get(0).getLastName(),"Anderson");
@@ -55,7 +55,7 @@ public class SimpleFileReaderTest {
             assertEquals(persons.get(3).getFormattedDob(),"02/27/1907");
                         
         } catch (IOException ex) {
-            Logger.getLogger(SimpleFileReaderTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SimpleInputStreamReaderTest.class.getName()).log(Level.SEVERE, null, ex);
         }   
     }
     
@@ -68,18 +68,18 @@ public class SimpleFileReaderTest {
     public void testInputStreamParsing() {
         
         try {
-            SimpleFileReader sfr = new SimpleFileReader();            
-            List<Person> persons = sfr.readRecords(pipeIn);
+            SimpleInputStreamReader sisr = new SimpleInputStreamReader();            
+            List<Person> persons = sisr.readRecords(pipeIn);
             assertEquals(4, persons.size());
             
-            List<Person> personsComma = sfr.readRecords(commaIn);
+            List<Person> personsComma = sisr.readRecords(commaIn);
             assertEquals(3, personsComma.size());
             
-            List<Person> personsSpace = sfr.readRecords(spaceIn);
+            List<Person> personsSpace = sisr.readRecords(spaceIn);
             assertEquals(3, personsSpace.size());
             
         } catch (IOException ex) {
-            Logger.getLogger(SimpleFileReaderTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SimpleInputStreamReaderTest.class.getName()).log(Level.SEVERE, null, ex);
         }   
     }
     
@@ -87,12 +87,12 @@ public class SimpleFileReaderTest {
     public void testEmptyFile() {
         
         try {
-            SimpleFileReader sfr = new SimpleFileReader();               
-            List<Person> emptyTest = sfr.readRecords(emptyIn);
+            SimpleInputStreamReader sisr = new SimpleInputStreamReader();               
+            List<Person> emptyTest = sisr.readRecords(emptyIn);
             assertTrue( emptyTest.isEmpty());                          
             
         } catch (IOException ex) {
-            Logger.getLogger(SimpleFileReaderTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SimpleInputStreamReaderTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -100,12 +100,12 @@ public class SimpleFileReaderTest {
     public void testSkipRowsFile() {
         
         try {
-            SimpleFileReader sfr = new SimpleFileReader();   
-            List<Person> skipRowsTest = sfr.readRecords(skipRows);
+            SimpleInputStreamReader sisr = new SimpleInputStreamReader();   
+            List<Person> skipRowsTest = sisr.readRecords(skipRows);
             assertEquals(8, skipRowsTest.size());
             
         } catch (IOException ex) {
-            Logger.getLogger(SimpleFileReaderTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SimpleInputStreamReaderTest.class.getName()).log(Level.SEVERE, null, ex);
         }   
     }
     
@@ -113,12 +113,12 @@ public class SimpleFileReaderTest {
     public void testMissingColumns() {
         
         try {
-            SimpleFileReader sfr = new SimpleFileReader();   
-            List<Person> missingCol = sfr.readRecords(missingColumns);
+            SimpleInputStreamReader sisr = new SimpleInputStreamReader();   
+            List<Person> missingCol = sisr.readRecords(missingColumns);
             assertEquals(3, missingCol.size());
             
         } catch (IOException ex) {
-            Logger.getLogger(SimpleFileReaderTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SimpleInputStreamReaderTest.class.getName()).log(Level.SEVERE, null, ex);
         }   
     }
     
