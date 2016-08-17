@@ -37,6 +37,7 @@ public class SimpleApp {
             } catch (IOException ex) {
                 Logger.getLogger(SimpleApp.class.getName()).log(Level.SEVERE, null, ex);
             }
+            this.printRecords(persons);
         }
                 
         
