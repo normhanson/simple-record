@@ -29,7 +29,7 @@ public class SimpleRestApp {
             
             StringBuilder sb = new StringBuilder();
             sb.append("Successfully added record ... ");
-            sb.append(persons.size()).append(" ... records now exist.");
+            sb.append(persons.size()).append(" ... records now exist.\n\n");
             return sb.toString();
         
         } catch (IOException ex) {
