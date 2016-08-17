@@ -1,10 +1,12 @@
 # simple-record
 
-for the impatient ...
+#For the impatient ...
+```
 mvn clean test
 mvn exec:java -Dexec.mainClass="com.hansoncoyne.simple.SimpleApp" -Dexec.args="/tmp/simple.pipe /tmp/simple.txt /tmp/simpleData.csv"
 mvn exec:java -Dexec.mainClass="com.hansoncoyne.simple.SimpleApp"
 mvn exec:java -Dexec.mainClass="com.hansoncoyne.simple.SimpleRestApp"
+```
 
 # Project Title
 
@@ -13,8 +15,10 @@ Simple App the reads in delimited data from file or rest call and outputs in a v
 ### Prerequisities
 
 What things you need to install the software and how to install them
+```
 Java 1.8
 Maven
+```
 
 ## Getting Started
 
