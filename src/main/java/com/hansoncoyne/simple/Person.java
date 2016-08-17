@@ -7,8 +7,8 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * 
- * 
+ *
+ *
  * @author nhanson
  */
 public class Person {
@@ -40,7 +40,7 @@ public class Person {
         //return (s == null || s.trim().length() == 0);
         return (s == null || s.length() == 0);
     }
-    
+
     protected Person() {
         nanos = System.nanoTime();
     }
@@ -56,14 +56,14 @@ public class Person {
         hash = 31 * hash + (int) (this.nanos ^ (this.nanos >>> 32));
         return hash;
     }
-    
-    /** 
-     * added some validation for real records 
-     * 
-     * @return 
+
+    /**
+     * added some validation for real records
+     *
+     * @return
      */
     public boolean isValid() {
-        if (lastName != null ) {
+        if (lastName != null) {
             return true;
         } else {
             return false;
@@ -125,7 +125,7 @@ public class Person {
 
         return (dob != null) ? df.format(dob) : null;
     }
-    
+
     public Date getDob() {
 
         return dob;
@@ -180,9 +180,9 @@ public class Person {
             }
         }
     }
-    
+
     protected long getNanos() {
         return nanos;
     }
-    
+
 }

@@ -22,11 +22,11 @@ public class SimpleInputStreamReader {
     }
 
     /**
-     * Creates a List of Person from the given InputStream 
-     * 
+     * Creates a List of Person from the given InputStream
+     *
      * @param in
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
     protected List<Person> readRecords(InputStream in) throws IOException {
 
@@ -56,12 +56,12 @@ public class SimpleInputStreamReader {
 
             // if the character is a delimiter (or a new line), process the StringBuilder accoringly
             if ((i == pipe || i == comma || i == space || i == newLine)) {
-                
+
                 processDelimiter(person, sb, itemIndex);
                 //reset the StringBuilder
                 sb = new StringBuilder();
                 itemIndex++;
-                
+
                 //if its a new line, some add'l work add the record to our list
                 if (i == newLine) {
                     //reset the item index, add the person to the list if they are valid

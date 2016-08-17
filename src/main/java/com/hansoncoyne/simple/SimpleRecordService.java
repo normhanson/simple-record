@@ -1,6 +1,9 @@
 package com.hansoncoyne.simple;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -28,24 +31,24 @@ public class SimpleRecordService {
     private static Comparator genderThenLastName = new ComparatorGenderThenLastName();
     private static Comparator lastNameReverse = Collections.reverseOrder(new ComparatorLastName());
     private static Comparator birthdate = new ComparatorBirthDate();
-    
-    
+
     /**
      * Load example data from resource files
      *
      * @param persons
      */
-    public void loadExampleData(List<Person> persons) {
+    public void loadExampleData(List<Person> persons) throws IOException {
 
-        try {
+        persons.addAll(sisr.readRecords(pipeIn));
+        persons.addAll(sisr.readRecords(commaIn));
+        persons.addAll(sisr.readRecords(spaceIn));
+    }
 
-            persons.addAll(sisr.readRecords(pipeIn));
-            persons.addAll(sisr.readRecords(commaIn));
-            persons.addAll(sisr.readRecords(spaceIn));
+    public void loadDataFromFile(List<Person> persons, File file) throws FileNotFoundException, IOException {
+        
+        FileInputStream fis = new FileInputStream(file);
+        persons.addAll(sisr.readRecords(fis));
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 
     /**
@@ -54,25 +57,18 @@ public class SimpleRecordService {
      * @param persons
      * @param record
      */
-    public void addRecord(List<Person> persons, String record) {
+    public void addRecord(List<Person> persons, String record) throws IOException {
 
         InputStream stream = new ByteArrayInputStream(record.getBytes(StandardCharsets.UTF_8));
-        try {
-            persons.addAll(sisr.readRecords(stream));
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        persons.addAll(sisr.readRecords(stream));
     }
-
-    
 
     public void sortByGender(List<Person> persons) {
         Collections.sort(persons, genderThenLastName);
     }
 
     public void sortByName(List<Person> persons) {
-        Collections.sort(persons, lastNameReverse );
+        Collections.sort(persons, lastNameReverse);
     }
 
     public void sortByBirthdate(List<Person> persons) {

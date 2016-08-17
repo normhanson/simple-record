@@ -1,69 +1,84 @@
 package com.hansoncoyne.simple;
 
 import com.google.gson.Gson;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static spark.Spark.*;
-
 
 /**
  *
  * @author nhanson
  */
-public class SimpleRestService {
-    
+public class SimpleRestApp {
+
     private final SimpleRecordService simple;
     List<Person> persons = new ArrayList();
-            
-    public SimpleRestService() {
-        
-       simple = new SimpleRecordService();
+
+    public SimpleRestApp() {
+
+        simple = new SimpleRecordService();
     }
-    
+
     public String putRecord(String record) {
-        simple.addRecord(persons, record);
+        
+        try {
+            simple.addRecord(persons, record);
+        } catch (IOException ex) {
+            Logger.getLogger(SimpleRestApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         return null;
-        }
+    }
+
     public List<Person> getListByGender() {
         simple.sortByGender(persons);
         return persons;
     }
-    
+
     public List<Person> getListByName() {
         simple.sortByName(persons);
         return persons;
     }
-    
+
     public List<Person> getListByBirthdate() {
         simple.sortByBirthdate(persons);
         return persons;
     }
-    
+
     public String loadExampleData() {
-        simple.loadExampleData(persons);
+        try {
+            simple.loadExampleData(persons);
+        } catch (IOException ex) {
+            Logger.getLogger(SimpleRestApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("Loading Example Data... ");
         sb.append(persons.size()).append(" ... record loaded.");
         return sb.toString();
     }
-    
+
+    /**
+     * main entry point for rest server.
+     * 
+     * @param args 
+     */
     public static void main(String[] args) {
-        
-        SimpleRestService simpleRestService = new SimpleRestService();
-        
-        port(5678); 
+
+        SimpleRestApp simpleRestService = new SimpleRestApp();
+
+        port(5678);
 
         get("/load", (request, response) -> simpleRestService.loadExampleData());
-        
+
         Gson gson = new Gson();
         get("/records/gender", (request, response) -> simpleRestService.getListByGender(), gson::toJson);
         get("/records/birthdate", (request, response) -> simpleRestService.getListByBirthdate(), gson::toJson);
         get("/records/name", (request, response) -> simpleRestService.getListByName(), gson::toJson);
         post("/records", (request, response) -> simpleRestService.putRecord(request.body()));
-        
-        
 
     }
-    
+
 }
