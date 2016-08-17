@@ -62,7 +62,7 @@ public class SimpleRestApp {
         }
         StringBuilder sb = new StringBuilder();
         sb.append("Loading Example Data... ");
-        sb.append(persons.size()).append(" ... record loaded.");
+        sb.append(persons.size()).append(" ... record(s) loaded.\n\n");
         return sb.toString();
     }
     
@@ -73,7 +73,7 @@ public class SimpleRestApp {
         
         StringBuilder sb = new StringBuilder();
         sb.append("Removing records ... ");
-        sb.append(size).append(" ... record removed.");
+        sb.append(size).append(" ... record(s) removed.\n\n");
         return sb.toString();
     }
 

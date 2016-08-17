@@ -60,9 +60,9 @@ curl http://localhost:5678/reset
 
 Load data into the store via POST
 ```
-curl -H "Content-Type: application/json" -X POST -d 'Dent,Arthur,male,Brown,6/6/1952' http://localhost:4567/records
-curl -H "Content-Type: application/json" -X POST -d 'Dent|Chuck|Male|Brown|6/6/1965' http://localhost:4567/records
-curl -H "Content-Type: application/json" -X POST -d 'Smith Jennifer F blue 12/01/1999' http://localhost:4567/records
+curl -X POST -d 'Dent,Arthur,male,Brown,6/6/1952' http://localhost:5678/records
+curl -X POST -d 'Dent|Chuck|Male|Brown|6/6/1965' http://localhost:5678/records
+curl -X POST -d 'Smith Jennifer F blue 12/01/1999' http://localhost:5678/records
 ```
 
 Get records as JSON sorted by gender, then last name
