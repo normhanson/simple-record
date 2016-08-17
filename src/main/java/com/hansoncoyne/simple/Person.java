@@ -20,7 +20,7 @@ public class Person {
     private char gender = NONE;
 
     //just a little something to gaurantee sorting tiebraker
-    private long nanos;
+    private transient long nanos;
 
     // gender domain
     private static char MALE = 'M';

@@ -26,6 +26,12 @@ public class SimpleRestApp {
         
         try {
             simple.addRecord(persons, record);
+            
+            StringBuilder sb = new StringBuilder();
+            sb.append("Successfully added record ... ");
+            sb.append(persons.size()).append(" ... records now exist.");
+            return sb.toString();
+        
         } catch (IOException ex) {
             Logger.getLogger(SimpleRestApp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -59,6 +65,17 @@ public class SimpleRestApp {
         sb.append(persons.size()).append(" ... record loaded.");
         return sb.toString();
     }
+    
+    
+    public String reset() {
+        int size = persons.size();
+        persons.clear();
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("Removing records ... ");
+        sb.append(size).append(" ... record removed.");
+        return sb.toString();
+    }
 
     /**
      * main entry point for rest server.
@@ -71,8 +88,11 @@ public class SimpleRestApp {
 
         port(5678);
 
+        // a couple of admin functions
         get("/load", (request, response) -> simpleRestService.loadExampleData());
+        get("/reset", (request, response) -> simpleRestService.reset());
 
+        
         Gson gson = new Gson();
         get("/records/gender", (request, response) -> simpleRestService.getListByGender(), gson::toJson);
         get("/records/birthdate", (request, response) -> simpleRestService.getListByBirthdate(), gson::toJson);
