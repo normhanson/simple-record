@@ -14,7 +14,7 @@ public class ComparatorGenderThenLastName implements Comparator<Person> {
             int rv = p1.getGender() - p2.getGender();
             
             if (rv == 0 ) {
-                rv = p1.getLastNameLower().compareTo(p2.getLastNameLower());
+                rv = p1.getLastName().compareToIgnoreCase(p2.getLastName());
             }
             
             if (rv == 0 ) {
