@@ -7,18 +7,17 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- *
+ * 
+ * 
  * @author nhanson
  */
 public class Person {
 
     private String lastName;
-    private String lastNameLower;
     private String firstName;
-    private String firstNameLower;
     private Date dob;
     private String favColor;
-    private char gender;
+    private char gender = NONE;
 
     //just a little something to gaurantee sorting tiebraker
     private long nanos;
@@ -38,9 +37,10 @@ public class Person {
      * @return
      */
     private static boolean isEmpty(String s) {
+        //return (s == null || s.trim().length() == 0);
         return (s == null || s.length() == 0);
     }
-
+    
     protected Person() {
         nanos = System.nanoTime();
     }
@@ -48,13 +48,26 @@ public class Person {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 31 * hash + Objects.hashCode(this.lastNameLower);
-        hash = 31 * hash + Objects.hashCode(this.firstNameLower);
+        hash = 31 * hash + Objects.hashCode(this.lastName);
+        hash = 31 * hash + Objects.hashCode(this.firstName);
         hash = 31 * hash + Objects.hashCode(this.dob);
         hash = 31 * hash + Objects.hashCode(this.favColor);
         hash = 31 * hash + this.gender;
         hash = 31 * hash + (int) (this.nanos ^ (this.nanos >>> 32));
         return hash;
+    }
+    
+    /** 
+     * added some validation for real records 
+     * 
+     * @return 
+     */
+    public boolean isValid() {
+        if (lastName != null ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -66,10 +79,10 @@ public class Person {
             return false;
         }
         final Person other = (Person) obj;
-        if (!Objects.equals(this.lastNameLower, other.lastNameLower)) {
+        if (!Objects.equals(this.lastName, other.lastName)) {
             return false;
         }
-        if (!Objects.equals(this.firstNameLower, other.firstNameLower)) {
+        if (!Objects.equals(this.firstName, other.firstName)) {
             return false;
         }
         if (!Objects.equals(this.dob, other.dob)) {
@@ -89,7 +102,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" + "lastName=" + lastName + ", firstName=" + firstName + ", dob=" + this.getDob() + ", favColor=" + favColor + ", gender=" + gender + '}';
+        return "Person{" + "lastName=" + lastName + ", firstName=" + firstName + ", dob=" + this.getFormattedDob() + ", favColor=" + favColor + ", gender=" + gender + '}';
     }
 
     public String getLastName() {
@@ -98,7 +111,6 @@ public class Person {
 
     public void setLastName(String lastName) {
         this.lastName = (isEmpty(lastName) ? null : lastName);
-        this.lastNameLower = (isEmpty(lastName) ? null : lastName.toLowerCase());
     }
 
     public String getFirstName() {
@@ -107,12 +119,16 @@ public class Person {
 
     public void setFirstName(String firstName) {
         this.firstName = (isEmpty(firstName) ? null : firstName);
-        this.firstNameLower = (isEmpty(firstName) ? null : firstName.toLowerCase());
     }
 
-    public String getDob() {
+    public String getFormattedDob() {
 
         return (dob != null) ? df.format(dob) : null;
+    }
+    
+    public Date getDob() {
+
+        return dob;
     }
 
     /**
@@ -164,12 +180,9 @@ public class Person {
             }
         }
     }
-
-    public String getLastNameLower() {
-        return lastNameLower;
+    
+    protected long getNanos() {
+        return nanos;
     }
-
-    public String getFirstNameLower() {
-        return firstNameLower;
-    }
+    
 }

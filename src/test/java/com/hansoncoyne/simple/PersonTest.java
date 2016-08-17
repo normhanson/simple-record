@@ -29,7 +29,6 @@ public class PersonTest {
         person2.setLastName(smith);
         
         assertEquals(smith, person.getLastName());
-        assertEquals(smith.toLowerCase(), person.getLastNameLower());
         assertFalse(person.equals(person2));
         assertTrue(person.hashCode() != 0 );
         
@@ -38,7 +37,6 @@ public class PersonTest {
         person2.setLastName(null);
         
         assertNull(person.getLastName());
-        assertNull(person.getLastNameLower());
         assertFalse(person.equals(person2));
         assertTrue(person.hashCode() != 0 );
         
@@ -48,7 +46,6 @@ public class PersonTest {
         person2.setLastName(empty);
         
         assertNull(person.getLastName());
-        assertNull(person.getLastNameLower());
         assertFalse(person.equals(person2));
         assertTrue(person.hashCode() != 0 );
         
@@ -66,7 +63,7 @@ public class PersonTest {
         person2.setFirstName(smith);
         
         assertEquals(smith, person.getFirstName());
-        assertEquals(smith.toLowerCase(), person.getFirstNameLower());
+        assertEquals(smith, person.getFirstName());
         assertFalse(person.equals(person2));
         assertTrue(person.hashCode() != 0 );
         
@@ -75,7 +72,6 @@ public class PersonTest {
         person2.setFirstName(null);
         
         assertNull(person.getFirstName());
-        assertNull(person.getFirstNameLower());
         assertFalse(person.equals(person2));
         assertTrue(person.hashCode() != 0 );
         
@@ -85,7 +81,6 @@ public class PersonTest {
         person2.setFirstName(empty);
         
         assertNull(person.getFirstName());
-        assertNull(person.getFirstNameLower());
         assertFalse(person.equals(person2));
         assertTrue(person.hashCode() != 0 );
         
@@ -134,7 +129,7 @@ public class PersonTest {
         person.setDob(realDate);
         person2.setDob(realDate);
         
-        assertEquals(realDate, person.getDob());
+        assertEquals(realDate, person.getFormattedDob());
         assertFalse(person.equals(person2));
         assertTrue(person.hashCode() != 0 );
         
@@ -142,7 +137,7 @@ public class PersonTest {
         person.setDob(null);
         person2.setDob(null);
         
-        assertNull(person.getDob());
+        assertNull(person.getFormattedDob());
         assertFalse(person.equals(person2));
         assertTrue(person.hashCode() != 0 );
         
@@ -152,8 +147,8 @@ public class PersonTest {
         person.setDob(badDate);
         person2.setDob(badDate);
         
-        assertNull(person.getDob());
-        assertNull(person.getDob());
+        assertNull(person.getFormattedDob());
+        assertNull(person.getFormattedDob());
         assertFalse(person.equals(person2));
         assertTrue(person.hashCode() != 0 );
         
@@ -163,8 +158,8 @@ public class PersonTest {
         person.setDob(badDate);
         person2.setDob(badDate);
         
-        assertNull(person.getDob());
-        assertNull(person.getDob());
+        assertNull(person.getFormattedDob());
+        assertNull(person.getFormattedDob());
         assertFalse(person.equals(person2));
         assertTrue(person.hashCode() != 0 );
     }
@@ -175,10 +170,8 @@ public class PersonTest {
         //basic
         String gender = "male";
         Person person = new Person();
-        Person person2 = new Person();
         
         person.setGender(gender);
-        person2.setFavColor(gender);
                 
         gender = "MaLE";
         person.setGender(gender);        
@@ -202,11 +195,26 @@ public class PersonTest {
         
         //null
         person.setGender(null);
-        person2.setGender(null);
-        
         assertEquals('X', person.getGender());
-        assertFalse(person.equals(person2));
         assertTrue(person.hashCode() != 0 );
         
     }
+    
+    @Test
+    public void testIsValid() {
+        Person person = new Person();
+        assertFalse(person.isValid());
+        person.setLastName("Test");
+        assertTrue(person.isValid());
+    }
+    
+    
+    @Test
+    public void testEmptyEquals() {
+        Person person = new Person();
+        Person person2 = new Person();
+        assertFalse(person.equals(person2));
+        
+    }
+            
 }

@@ -21,100 +21,99 @@ public class SimpleFileReader {
     public SimpleFileReader() {
     }
 
+    /**
+     * Creates a List of Person from the given InputStream 
+     * 
+     * @param in
+     * @return
+     * @throws IOException 
+     */
     protected List<Person> readRecords(InputStream in) throws IOException {
 
         InputStreamReader isr = new InputStreamReader(in);
         List<Person> persons = null;
-        
-        try {
-            persons = this.readline(isr);
-            System.out.println (persons.size());
 
+        try {
+            persons = this.readStream(isr);
         } finally {
             isr.close();
         }
         return persons;
     }
 
-    protected List<Person> readline(InputStreamReader isr) throws IOException {
+    protected List<Person> readStream(InputStreamReader isr) throws IOException {
         int i;
         int itemIndex = 0;
         List<Person> persons = new ArrayList();
-        StringBuilder sb = new StringBuilder();
-        Person person = null;
-        
+
         //prime the pump
         i = isr.read();
-        
+        StringBuilder sb = new StringBuilder();
+        Person person = new Person();
+
         // keep reading until EOF character
-        while(i !=-1) {
+        while (i != -1) {
 
-            // if the character is a delimiter, process the sb accoringly
-            if (i == pipe || i == comma || i == space || i == newLine) {
-                //System.out.println("delimiter");
-                //System.out.println("ItemIndex:" + itemIndex);
-                if (itemIndex == 0) {
-                    System.out.println("setLastName:" + sb);
-                    person = new Person();
-                    person.setLastName(sb.toString());
-                    sb = new StringBuilder();
-                    itemIndex++;
-
-                } else if (itemIndex == 1) {
-                    System.out.println("setFirstName:" + sb);
-                    person.setFirstName(sb.toString());
-                    sb = new StringBuilder();
-                    itemIndex++;
-
-                } else if (itemIndex == 2) {
-                    System.out.println("setGender:" + sb);
-                    person.setGender(sb.toString());
-                    sb = new StringBuilder();
-                    itemIndex++;
-
-                } else if (itemIndex == 3) {
-                    System.out.println("setColor:" + sb);
-                    person.setFavColor(sb.toString());
-                    sb = new StringBuilder();
-                    itemIndex++;
-
-                } else if (itemIndex == 4) {
-                    System.out.println("setDOB:" + sb);
-                    person.setDob(sb.toString());
-                    sb = new StringBuilder();
-                    
-                    //reset the item index
+            // if the character is a delimiter (or a new line), process the StringBuilder accoringly
+            if ((i == pipe || i == comma || i == space || i == newLine)) {
+                
+                processDelimiter(person, sb, itemIndex);
+                //reset the StringBuilder
+                sb = new StringBuilder();
+                itemIndex++;
+                
+                //if its a new line, some add'l work add the record to our list
+                if (i == newLine) {
+                    //reset the item index, add the person to the list if they are valid
                     itemIndex = 0;
-                    
-                    System.out.println(person);
-                    
-                    //record is complete, add it to the list
-                    persons.add(person);
+                    if (person.isValid()) {
+                        persons.add(person);
+                    }
                     person = null;
+                    person = new Person();
                 }
 
             } else {
-                // if was not a delimiter, 
-                // just keep reading, dont add bs characters to string builder
-                if (i != carriageReturn ) {
-                    sb.append((char)i);
-                    //System.out.println(sb);
+                // if was not a delimiter, add the char to the StringBuilder, except windows carriage returns
+                if (i != carriageReturn) {
+                    sb.append((char) i);
                 }
             }
             i = isr.read();
-        } 
-        
+        }
+
         // we need to collect the last record.
         // this can happen if there is no newline before the EOF
-        if (sb.length() > 0 && itemIndex == 4){
-            System.out.println("setDOB:" + sb);
-            person.setDob(null);
-            System.out.println(person);
-            persons.add(person);
+        if (sb.length() > 0) {
+            processDelimiter(person, sb, itemIndex);
+            if (person.isValid()) {
+                persons.add(person);
+            }
         }
-        
+
         return persons;
     }
-    
-    
+
+    protected void processDelimiter(Person person, StringBuilder sb, int itemIndex) {
+        if (itemIndex == 0) {
+            //System.out.println("setLastName:" + sb);
+            person.setLastName(sb.toString());
+
+        } else if (itemIndex == 1) {
+            //System.out.println("setFirstName:" + sb);
+            person.setFirstName(sb.toString());
+
+        } else if (itemIndex == 2) {
+            //System.out.println("setGender:" + sb);
+            person.setGender(sb.toString());
+
+        } else if (itemIndex == 3) {
+            //System.out.println("setColor:" + sb);
+            person.setFavColor(sb.toString());
+
+        } else if (itemIndex == 4) {
+            //System.out.println("setDOB:" + sb);
+            person.setDob(sb.toString());
+        }
+    }
 }
