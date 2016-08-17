@@ -1,6 +1,7 @@
 # simple-record
+Simple App the reads in delimited data from file or rest call and outputs in a variety of sorted formats via STDOUT (for CLI) or JSON (via REST) 
 
-#For the impatient ...
+## For the impatient ...
 ```
 mvn clean test
 mvn exec:java -Dexec.mainClass="com.hansoncoyne.simple.SimpleApp" -Dexec.args="/tmp/simple.pipe /tmp/simple.txt /tmp/simpleData.csv"
@@ -8,16 +9,24 @@ mvn exec:java -Dexec.mainClass="com.hansoncoyne.simple.SimpleApp"
 mvn exec:java -Dexec.mainClass="com.hansoncoyne.simple.SimpleRestApp"
 ```
 
-# Project Title
 
-Simple App the reads in delimited data from file or rest call and outputs in a variety of sorted formats via STDOUT (for CLI) or JSON (via REST) 
+## Prerequisities
 
-### Prerequisities
-
-What things you need to install the software and how to install them
+What things you need...
 ```
 Java 1.8
 Maven
+```
+
+### Dependencies 
+For JSON serialization
+```
+https://github.com/google/gson
+```
+
+For mini rest server
+```
+http://sparkjava.com/
 ```
 
 ## Getting Started
@@ -43,7 +52,6 @@ To start the SimpleRestApp
 ```
 mvn exec:java -Dexec.mainClass="com.hansoncoyne.simple.SimpleRestApp"
 ```
-
 
 ### Testing SimpleRestApp with curl 
 Run the mvn command to start the SimpleRestApp, then in a seprate terminal...
